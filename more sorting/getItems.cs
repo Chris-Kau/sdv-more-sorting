@@ -13,20 +13,11 @@ namespace more_sorting
 {
     static class accessChest
     {
-        internal static List<Item> getItems(object? sender, MenuChangedEventArgs e)
+        internal static List<Item> getItems(object? sender, Chest chest)
         {
             List<Item> containerContents = new List<Item>();
-            if (e.NewMenu is StardewValley.Menus.ItemGrabMenu menu)
-            {
-                //chest, includes stone chest and big chests
-                if (menu.sourceItem is Chest chest)
-                {
-                    foreach (Item i in chest.Items)
-                    {
-                        containerContents.Add(i);
-                    }
-                }
-            }
+            foreach (Item i in chest.Items)
+                containerContents.Add(i);
             return containerContents;
         }
     }
