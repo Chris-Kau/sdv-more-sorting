@@ -13,29 +13,11 @@ namespace more_sorting
         Farmer person = Game1.player;
         public override void Entry(IModHelper help)
         {
-
-            //Helper.Events.Display.MenuChanged += this.SortItems;
-            Helper.Events.Input.ButtonPressed += this.PressO;
+            //O keybind should sort items alphabetically
+            Helper.Events.Input.ButtonPressed += this.keyO;
         }
 
-        private void SortItems(object? sender, Chest chest, StardewValley.Menus.ItemGrabMenu menu)
-        {
-            //gets the items in the chest the player is currently in
-            List<Item> containerContents = accessChest.getItems(sender, chest);
-            //prints all the items into the console
-            foreach (Item i in containerContents)
-            {
-                this.Monitor.Log($"{i.Name}", LogLevel.Debug);
-            }
-
-            //clears the chest (just for testing purposes)
-            for(int i = 0; i < containerContents.Count; i++)
-            {
-                menu.ItemsToGrabMenu.actualInventory.RemoveAt(0);
-            }
-        }
-
-        private void PressO(object? sender, ButtonPressedEventArgs e)
+        private void keyO(object? sender, ButtonPressedEventArgs e)
         {
             if (!Context.IsWorldReady)
                 return;
@@ -45,7 +27,7 @@ namespace more_sorting
                 //checks to see if that clickable menu is a chest
                 if(menu.sourceItem is Chest chest)
                 {
-                    this.SortItems(sender, chest, menu);
+                    SortOptions.AlphaSort(sender, chest, menu);
                 }
 
             }
