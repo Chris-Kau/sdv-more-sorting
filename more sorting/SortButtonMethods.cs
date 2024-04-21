@@ -2,11 +2,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using StardewValley;
 using StardewValley.Menus;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace more_sorting
 {
@@ -49,7 +44,7 @@ namespace more_sorting
         }
         internal static void HoverEffect(ClickableTextureComponent icon, int x, int y, float originalScale, float scaleResult, float delta)
         {
-            //Checks to see if the mouse cursor is on the button, if it is, scale the button up, but if it isnt, scale the button to its original size
+            //Checks to see if the mouse cursor is hovering the button, if it is, scale the button up, but if it isnt, scale the button to its original size
             if (icon.containsPoint(x,y))
             {
                 ScaleTransition(icon, scaleResult, delta);

@@ -1,12 +1,5 @@
-﻿using StardewModdingAPI;
-using StardewValley;
+﻿using StardewValley;
 using StardewValley.Objects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace more_sorting
 {
@@ -33,9 +26,18 @@ namespace more_sorting
                     }
                     if(method == "price")
                     {
-                        if (items[j].sellToStorePrice() < items[minidx].sellToStorePrice())
+                        if(items[j].sellToStorePrice() < items[minidx].sellToStorePrice())
                         {
                             minidx = j;
+                        }
+                        //if prices are the same, sort them alphabetically
+                        else if(items[j].sellToStorePrice() == items[minidx].sellToStorePrice())
+                        {
+                            int result = string.Compare(items[minidx].Name, items[j].Name);
+                            if(result < 0)
+                            {
+                                minidx = j;
+                            }
                         }
                     }
                 }

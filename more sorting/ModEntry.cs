@@ -1,15 +1,10 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
-using StardewModdingAPI.Utilities;
 using StardewValley;
-using StardewValley.Objects;
 using StardewValley.Menus;
 using Microsoft.Xna.Framework.Graphics;
-using System.Security.Cryptography.X509Certificates;
-using System.Reflection.Emit;
-using System.Xml.Linq;
+
 namespace more_sorting
 {
     internal sealed class ModEntry : Mod
@@ -39,6 +34,7 @@ namespace more_sorting
 
         private void CreateButtons(object? sender, MenuChangedEventArgs e)
         {
+            //if player exits a menu, make buttons invisible
             if(e.NewMenu is null && SortButtonMethods.AlphaSortIcon is not null && SortButtonMethods.PriceSortIcon is not null)
             {
                 SortButtonMethods.AlphaSortIcon.visible = false;
@@ -54,11 +50,12 @@ namespace more_sorting
                     SortButtonMethods.AlphaSortIcon.visible = true;
                     SortButtonMethods.PriceSortIcon.visible = true;
                 }
+                //if the player opened an ItemGrabMenu that is not a chest or fridge
                 else
                 {
                     if (SortButtonMethods.AlphaSortIcon is not null && SortButtonMethods.PriceSortIcon is not null)
                     {
-                        //if the player opens up an ItemGrabMenu that isnt a chest, hide the buttons.
+                        //if the player opens up an ItemGrabMenu that isnt a chest or fridge, hide the buttons.
                         SortButtonMethods.AlphaSortIcon.visible = false;
                         SortButtonMethods.PriceSortIcon.visible = false;
                     }
