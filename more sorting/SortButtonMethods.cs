@@ -22,7 +22,6 @@ namespace more_sorting
         internal static void MakeAlphaIcon(ItemGrabMenu menu, Texture2D img)
         {
             //Responsible for creating the button and drawing it to the screen 
-            //ublic ClickableTextureComponent(string name, Rectangle bounds, string label, string hoverText, Texture2D texture, Rectan
             AlphaSortIcon = new ClickableTextureComponent(
                 new Rectangle((int)menu.organizeButton.getVector2().X + 16 + 64, (int)menu.organizeButton.getVector2().Y, 64, 64),
                 img,
@@ -55,6 +54,7 @@ namespace more_sorting
             {
                 ScaleTransition(icon, scaleResult, delta);
                 DrawButton(icon);
+                //draws the hover text
                 IClickableMenu.drawHoverText(
                  Game1.spriteBatch,
                  icon.hoverText,
@@ -68,7 +68,7 @@ namespace more_sorting
             }
         }
 
-        internal static void Clicked(ClickableTextureComponent icon, float originalScale, float scaleResult)
+        internal static void ClickAnimation(ClickableTextureComponent icon, float originalScale, float scaleResult)
         {
             ScaleTransition(icon, originalScale, 0.01f);
             ScaleTransition(icon, scaleResult, 0.01f);
