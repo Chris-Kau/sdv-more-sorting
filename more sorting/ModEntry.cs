@@ -70,7 +70,11 @@ namespace more_sorting
         }
         private void ClickedSortButtons(object? sender, ButtonPressedEventArgs e)
         {
-            if(e.Button is SButton.MouseLeft && Game1.activeClickableMenu is ItemGrabMenu menu)
+            bool reverse = false;
+            //if the user right clicks button, reverse the sorted contents.
+            if (e.Button is SButton.MouseRight)
+                reverse = true;
+            if((e.Button is SButton.MouseLeft || e.Button is SButton.MouseRight) && Game1.activeClickableMenu is ItemGrabMenu menu)
             {
                                
                 Vector2 mousePosition = new Vector2(Game1.getMouseXRaw(), Game1.getMouseYRaw());
@@ -79,12 +83,12 @@ namespace more_sorting
                     //Checks to see if the player clicks on the AlphaSortIcon, and if the player does, sort it Alphabetically
                     if (SortButtonMethods.AlphaSortIconArea.Contains(mousePosition.X, mousePosition.Y))
                     {
-                        SortOptions.AlphaSort(sender, chest, menu);
+                        SortOptions.AlphaSort(sender, chest, menu, reverse);
                     }
                     //Checks to see if the player clicks on the PriceSortIcon
                     else if (SortButtonMethods.PriceSortIconArea.Contains(mousePosition.X, mousePosition.Y))
                     {
-                        SortOptions.PriceSort(sender, chest, menu);
+                        SortOptions.PriceSort(sender, chest, menu, reverse);
                     }
                 }
 
