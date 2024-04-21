@@ -65,6 +65,7 @@ namespace more_sorting
                     SortButtonMethods.HoverEffect(SortButtonMethods.AlphaSortIcon, (int)mousePosition.X, (int)mousePosition.Y, 1f, 1.1f, 0.02f);
                 }
                 //Draws the mouse so the cursor is not under the button
+ 
                 menu.drawMouse(Game1.spriteBatch);
             }
         }
@@ -84,11 +85,15 @@ namespace more_sorting
                     if (SortButtonMethods.AlphaSortIconArea.Contains(mousePosition.X, mousePosition.Y))
                     {
                         SortOptions.AlphaSort(sender, chest, menu, reverse);
+                        SortButtonMethods.Clicked(SortButtonMethods.AlphaSortIcon, 1f, 1.1f);
+                        Game1.playSound("Ship");
                     }
                     //Checks to see if the player clicks on the PriceSortIcon
                     else if (SortButtonMethods.PriceSortIconArea.Contains(mousePosition.X, mousePosition.Y))
                     {
                         SortOptions.PriceSort(sender, chest, menu, reverse);
+                        SortButtonMethods.Clicked(SortButtonMethods.PriceSortIcon, 1f, 1.1f);
+                        Game1.playSound("Ship");
                     }
                 }
 

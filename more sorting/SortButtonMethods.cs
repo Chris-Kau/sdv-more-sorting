@@ -22,12 +22,14 @@ namespace more_sorting
         internal static void MakeAlphaIcon(ItemGrabMenu menu, Texture2D img)
         {
             //Responsible for creating the button and drawing it to the screen 
+            //ublic ClickableTextureComponent(string name, Rectangle bounds, string label, string hoverText, Texture2D texture, Rectan
             AlphaSortIcon = new ClickableTextureComponent(
                 new Rectangle((int)menu.organizeButton.getVector2().X + 16 + 64, (int)menu.organizeButton.getVector2().Y, 64, 64),
                 img,
                 new Rectangle(0, 0, 64, 64),
                 1f
                 );
+            AlphaSortIcon.hoverText = "Sorts A->Z";
             //Gets position of the button as a vector
             AlphaSortIconPos = new Vector2(menu.organizeButton.getVector2().X + 16 + 64, menu.organizeButton.getVector2().Y);
             //uses that position to create a rectangle around that button, used for hover animations and detecting clicks
@@ -42,6 +44,7 @@ namespace more_sorting
                     new Rectangle(0, 0, 64, 64),
                     1f
                     );
+            PriceSortIcon.hoverText = "Sorts price high->low";
             PriceSortIconPos = new Vector2(menu.fillStacksButton.getVector2().X + 16 + 64, menu.fillStacksButton.getVector2().Y);
             PriceSortIconArea = new Rectangle((int)PriceSortIconPos.X, (int)PriceSortIconPos.Y, 64, 64);
         }
@@ -52,12 +55,23 @@ namespace more_sorting
             {
                 ScaleTransition(icon, scaleResult, delta);
                 DrawButton(icon);
+                IClickableMenu.drawHoverText(
+                 Game1.spriteBatch,
+                 icon.hoverText,
+                 Game1.smallFont
+                 );
             }
             else
             {
                 ScaleTransition(icon, originalScale, -delta);
                 DrawButton(icon);
             }
+        }
+
+        internal static void Clicked(ClickableTextureComponent icon, float originalScale, float scaleResult)
+        {
+            ScaleTransition(icon, originalScale, 0.01f);
+            ScaleTransition(icon, scaleResult, 0.01f);
         }
 
         private static void DrawButton(ClickableTextureComponent icon)
