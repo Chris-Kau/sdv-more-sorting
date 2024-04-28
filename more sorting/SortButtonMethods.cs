@@ -13,33 +13,39 @@ namespace more_sorting
         public static Rectangle PriceSortIconArea;
         public static ClickableTextureComponent? AlphaSortIcon;
         public static ClickableTextureComponent? PriceSortIcon;
+        private static int width = 64;
+        private static int height = 64;
 
-        internal static void MakeAlphaIcon(ItemGrabMenu menu, Texture2D img)
+        internal static void MakeAlphaIcon(ItemGrabMenu menu, Texture2D img, bool HasBC)
         {
             //Responsible for creating the button and drawing it to the screen 
             AlphaSortIcon = new ClickableTextureComponent(
-                new Rectangle((int)menu.organizeButton.getVector2().X + 16 + 64, (int)menu.organizeButton.getVector2().Y, 64, 64),
+                new Rectangle((int)menu.organizeButton.getVector2().X + 16 + width, (int)menu.organizeButton.getVector2().Y, width, height),
                 img,
                 new Rectangle(0, 0, 64, 64),
                 1f
                 );
-            AlphaSortIcon.hoverText = "Sorts A->Z";
+            AlphaSortIcon.hoverText = "A->Z";
+            if (HasBC)
+                AlphaSortIcon.bounds = new Rectangle((int)menu.organizeButton.getVector2().X + 176 + width, (int)menu.organizeButton.getVector2().Y, width, height);
             //Gets position of the button as a vector
-            AlphaSortIconPos = new Vector2(menu.organizeButton.getVector2().X + 16 + 64, menu.organizeButton.getVector2().Y);
+            AlphaSortIconPos = new Vector2(AlphaSortIcon.bounds.X, AlphaSortIcon.bounds.Y);
             //uses that position to create a rectangle around that button, used for hover animations and detecting clicks
-            AlphaSortIconArea = new Rectangle((int)AlphaSortIconPos.X, (int)AlphaSortIconPos.Y, 64, 64);
+            AlphaSortIconArea = new Rectangle((int)AlphaSortIconPos.X, (int)AlphaSortIconPos.Y, width, height);
         }
 
-        internal static void MakePriceIcon(ItemGrabMenu menu, Texture2D img)
+        internal static void MakePriceIcon(ItemGrabMenu menu, Texture2D img, bool HasBC)
         {
             PriceSortIcon = new ClickableTextureComponent(
-                    new Rectangle((int)menu.fillStacksButton.getVector2().X + 16 + 64, (int)menu.fillStacksButton.getVector2().Y, 64, 64),
+                    new Rectangle((int)menu.fillStacksButton.getVector2().X + 16 + width, (int)menu.fillStacksButton.getVector2().Y, width, height),
                     img,
                     new Rectangle(0, 0, 64, 64),
                     1f
                     );
-            PriceSortIcon.hoverText = "Sorts price high->low";
-            PriceSortIconPos = new Vector2(menu.fillStacksButton.getVector2().X + 16 + 64, menu.fillStacksButton.getVector2().Y);
+            PriceSortIcon.hoverText = "$$$->$";
+            if (HasBC)
+                PriceSortIcon.bounds = new Rectangle((int)menu.fillStacksButton.getVector2().X + 176 + width, (int)menu.fillStacksButton.getVector2().Y, width, height);
+            PriceSortIconPos = new Vector2(PriceSortIcon.bounds.X, PriceSortIcon.bounds.Y);
             PriceSortIconArea = new Rectangle((int)PriceSortIconPos.X, (int)PriceSortIconPos.Y, 64, 64);
         }
         internal static void HoverEffect(ClickableTextureComponent icon, int x, int y, float originalScale, float scaleResult, float delta)
