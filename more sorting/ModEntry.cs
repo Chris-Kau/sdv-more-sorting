@@ -53,7 +53,7 @@ namespace more_sorting
             }
             if(e.NewMenu is ItemGrabMenu menu)
             {
-                if(menu.source == 1)
+                if(menu.source == 1 || menu.context is StardewValley.Objects.Chest)
                 {
                     MakeButtons(sender);
                     SortButtonMethods.AlphaSortIcon.visible = true;
