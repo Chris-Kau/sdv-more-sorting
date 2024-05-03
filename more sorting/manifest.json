@@ -1,7 +1,7 @@
 {
   "Name": "More Sorting Options",
   "Author": "Chris Kau & Sean Nightingale",
-  "Version": "1.0.1",
+  "Version": "1.0.2",
   "Description": "Allows the player to organize items within chests using more options",
   "UniqueID": "CKSR.MoreSorting",
   "EntryDll": "more sorting.dll",
