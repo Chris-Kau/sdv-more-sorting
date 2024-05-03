@@ -13,8 +13,6 @@ namespace more_sorting
         public override void Entry(IModHelper helper)
         {
             HasBetterChests = this.Helper.ModRegistry.IsLoaded("furyx639.BetterChests");
-            IModInfo BCInfo = this.Helper.ModRegistry.Get("furyx639.BetterChests");
-
             //Gives the Illusion of the user "clicking" on the buttons
             Helper.Events.Input.ButtonPressed += this.ClickedSortButtons;
             //Updates the button everytime the player opens a chest
@@ -32,25 +30,23 @@ namespace more_sorting
 
         private void MakeButtons(object? sender)
         {
-            if(Game1.activeClickableMenu is ItemGrabMenu menu && menu.context is StardewValley.Objects.Chest chest)
+            Console.WriteLine($"Accessed MakeButtons()");
+            if (Game1.activeClickableMenu is ItemGrabMenu menu)
             {
-                //better chests does not modify the fridge's gui, so we want to check if the player is in a fridge or actual chest
-                if(chest.fridge)
+                if (menu.source == 1 &&  menu.sourceItem is StardewValley.Objects.Chest chest)
                 {
-                    SortButtonMethods.MakeAlphaIcon(menu, Helper.ModContent.Load<Texture2D>("./assets/AlphaSortIcon.png"), false);
-                    SortButtonMethods.MakePriceIcon(menu, Helper.ModContent.Load<Texture2D>("./assets/PriceSortIcon.png"), false);
-                }
-                else
-                {
+                    Console.WriteLine($"Accessed MakeButtons() else");
                     SortButtonMethods.MakeAlphaIcon(menu, Helper.ModContent.Load<Texture2D>("./assets/AlphaSortIcon.png"), HasBetterChests);
                     SortButtonMethods.MakePriceIcon(menu, Helper.ModContent.Load<Texture2D>("./assets/PriceSortIcon.png"), HasBetterChests);
                 }
+
 
             }
         }
 
         private void CreateButtonsOnMenuChanged(object? sender, MenuChangedEventArgs e)
         {
+            
             //if player exits a menu, make buttons invisible
             if(e.NewMenu is null && SortButtonMethods.AlphaSortIcon is not null && SortButtonMethods.PriceSortIcon is not null)
             {
@@ -59,8 +55,7 @@ namespace more_sorting
             }
             if(e.NewMenu is ItemGrabMenu menu)
             {
-                
-                if(menu.context is StardewValley.Objects.Chest)
+                if(menu.source == 1)
                 {
                     MakeButtons(sender);
                     SortButtonMethods.AlphaSortIcon.visible = true;
@@ -103,7 +98,7 @@ namespace more_sorting
             if((e.Button is SButton.MouseLeft || e.Button is SButton.MouseRight) && Game1.activeClickableMenu is ItemGrabMenu menu)
             {  
                 Vector2 mousePosition = new Vector2(Game1.getMouseXRaw(), Game1.getMouseYRaw());
-                if(menu.context is StardewValley.Objects.Chest chest)
+                if(menu.source == 1 && menu.sourceItem is StardewValley.Objects.Chest chest)
                 {
                     //Checks to see if the player clicks on the AlphaSortIcon, and if the player does, sort it Alphabetically
                     if (SortButtonMethods.AlphaSortIconArea.Contains(mousePosition.X, mousePosition.Y))
