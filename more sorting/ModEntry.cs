@@ -30,12 +30,10 @@ namespace more_sorting
 
         private void MakeButtons(object? sender)
         {
-            Console.WriteLine($"Accessed MakeButtons()");
             if (Game1.activeClickableMenu is ItemGrabMenu menu)
             {
                 if (menu.source == 1 &&  menu.sourceItem is StardewValley.Objects.Chest chest)
                 {
-                    Console.WriteLine($"Accessed MakeButtons() else");
                     SortButtonMethods.MakeAlphaIcon(menu, Helper.ModContent.Load<Texture2D>("./assets/AlphaSortIcon.png"), HasBetterChests);
                     SortButtonMethods.MakePriceIcon(menu, Helper.ModContent.Load<Texture2D>("./assets/PriceSortIcon.png"), HasBetterChests);
                 }
