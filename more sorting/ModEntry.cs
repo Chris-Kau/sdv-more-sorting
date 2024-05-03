@@ -32,7 +32,7 @@ namespace more_sorting
         {
             if (Game1.activeClickableMenu is ItemGrabMenu menu)
             {
-                if (menu.source == 1 &&  menu.sourceItem is StardewValley.Objects.Chest chest)
+                if (menu.source == 1 && menu.sourceItem is StardewValley.Objects.Chest || menu.context is StardewValley.Objects.Chest)
                 {
                     SortButtonMethods.MakeAlphaIcon(menu, Helper.ModContent.Load<Texture2D>("./assets/AlphaSortIcon.png"), HasBetterChests);
                     SortButtonMethods.MakePriceIcon(menu, Helper.ModContent.Load<Texture2D>("./assets/PriceSortIcon.png"), HasBetterChests);
@@ -96,8 +96,16 @@ namespace more_sorting
             if((e.Button is SButton.MouseLeft || e.Button is SButton.MouseRight) && Game1.activeClickableMenu is ItemGrabMenu menu)
             {  
                 Vector2 mousePosition = new Vector2(Game1.getMouseXRaw(), Game1.getMouseYRaw());
-                if(menu.source == 1 && menu.sourceItem is StardewValley.Objects.Chest chest)
+                StardewValley.Objects.Chest one = null;
+                StardewValley.Objects.Chest two = null;
+
+                if (menu.source == 1 && menu.sourceItem is StardewValley.Objects.Chest chest1)
+                    one = chest1;
+                if (menu.context is StardewValley.Objects.Chest chest2)
+                    two = chest2;
+                if (menu.source == 1 && menu.sourceItem is StardewValley.Objects.Chest || menu.context is StardewValley.Objects.Chest)
                 {
+                    StardewValley.Objects.Chest chest = one ?? two;
                     //Checks to see if the player clicks on the AlphaSortIcon, and if the player does, sort it Alphabetically
                     if (SortButtonMethods.AlphaSortIconArea.Contains(mousePosition.X, mousePosition.Y))
                     {
