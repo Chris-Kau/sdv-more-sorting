@@ -4,6 +4,7 @@ using StardewModdingAPI.Events;
 using StardewValley;
 using StardewValley.Menus;
 using Microsoft.Xna.Framework.Graphics;
+using StardewValley.Extensions;
 
 namespace more_sorting
 {
@@ -80,11 +81,64 @@ namespace more_sorting
                 //these are in charge of scaling the buttons up/down when hovering.
                 if (SortButtonMethods.PriceSortIcon is not null && SortButtonMethods.AlphaSortIcon is not null)
                 {
-                    SortButtonMethods.HoverEffect(SortButtonMethods.PriceSortIcon, (int)mousePosition.X, (int)mousePosition.Y, 1f, 1.1f, 0.02f);
-                    SortButtonMethods.HoverEffect(SortButtonMethods.AlphaSortIcon, (int)mousePosition.X, (int)mousePosition.Y, 1f, 1.1f, 0.02f);
+                    SortButtonMethods.HoverEffect(SortButtonMethods.PriceSortIcon, SortButtonMethods.PriceSortIconArea, (int)mousePosition.X, (int)mousePosition.Y, 1f, 1.1f, 0.02f);
+                    SortButtonMethods.HoverEffect(SortButtonMethods.AlphaSortIcon, SortButtonMethods.AlphaSortIconArea, (int)mousePosition.X, (int)mousePosition.Y, 1f, 1.1f, 0.02f);
                 }
+
+                //Draws color picker toggle button hover text over icon/alpha sort buttons
+                if (!HasBetterChests)
+                {
+                    Rectangle colorbutton = new Rectangle((int)Math.Ceiling(menu.colorPickerToggleButton.bounds.X * Game1.options.uiScale), (int)Math.Ceiling(menu.colorPickerToggleButton.bounds.Y * Game1.options.uiScale), (int)Math.Ceiling(64 * Game1.options.uiScale), (int)Math.Ceiling(64 * Game1.options.uiScale));
+                    if (colorbutton.Contains(mousePosition))
+                    {
+                        IClickableMenu.drawHoverText(
+                        Game1.spriteBatch,
+                        menu.colorPickerToggleButton.hoverText,
+                        Game1.smallFont);
+                    }
+                }
+
+                //Draws organize button hover text over icon/alpha sort buttons
+                Rectangle orgbutton = new Rectangle((int)Math.Ceiling(menu.organizeButton.bounds.X * Game1.options.uiScale), (int)Math.Ceiling(menu.organizeButton.bounds.Y * Game1.options.uiScale), (int)Math.Ceiling(64 * Game1.options.uiScale), (int)Math.Ceiling(64 * Game1.options.uiScale));
+                if(orgbutton.Contains(mousePosition))
+                {
+                    IClickableMenu.drawHoverText(
+                    Game1.spriteBatch,
+                    menu.organizeButton.hoverText,
+                    Game1.smallFont);
+                }
+                //Draws fill stacks button hover text over icon/alpha sort buttons
+                Rectangle fillButton = new Rectangle((int)Math.Ceiling(menu.fillStacksButton.bounds.X * Game1.options.uiScale), (int)Math.Ceiling(menu.fillStacksButton.bounds.Y * Game1.options.uiScale), (int)Math.Ceiling(64 * Game1.options.uiScale), (int)Math.Ceiling(64 * Game1.options.uiScale));
+                if (fillButton.Contains((int)mousePosition.X, (int)mousePosition.Y))
+                {
+                    IClickableMenu.drawHoverText(
+                    Game1.spriteBatch,
+                    menu.fillStacksButton.hoverText,
+                    Game1.smallFont);
+                }
+                //Draws hover text over icons
+                if(SortButtonMethods.PriceSortIconArea.Contains(mousePosition) && SortButtonMethods.PriceSortIcon is not null)
+                {
+                    IClickableMenu.drawHoverText(
+                    Game1.spriteBatch,
+                    SortButtonMethods.PriceSortIcon.hoverText,
+                    Game1.smallFont
+                    );
+                }
+                //Draws hover text over icons
+                if (SortButtonMethods.AlphaSortIconArea.Contains(mousePosition) && SortButtonMethods.AlphaSortIcon is not null)
+                {
+                    IClickableMenu.drawHoverText(
+                    Game1.spriteBatch,
+                    SortButtonMethods.AlphaSortIcon.hoverText,
+                    Game1.smallFont
+                    );
+                }
+
                 //Draws the mouse so the cursor is not under the button
                 menu.drawMouse(Game1.spriteBatch);
+
+
             }
         }
         private void ClickedSortButtons(object? sender, ButtonPressedEventArgs e)
@@ -105,6 +159,7 @@ namespace more_sorting
                     two = chest2;
                 if (menu.source == 1 && menu.sourceItem is StardewValley.Objects.Chest || menu.context is StardewValley.Objects.Chest)
                 {
+
                     StardewValley.Objects.Chest chest = one ?? two;
                     //Checks to see if the player clicks on the AlphaSortIcon, and if the player does, sort it Alphabetically
                     if (SortButtonMethods.AlphaSortIconArea.Contains(mousePosition.X, mousePosition.Y))

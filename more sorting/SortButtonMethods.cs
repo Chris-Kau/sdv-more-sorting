@@ -29,9 +29,9 @@ namespace more_sorting
             if (HasBC)
                 AlphaSortIcon.bounds = new Rectangle((int)menu.organizeButton.getVector2().X + 176 + width, (int)menu.organizeButton.getVector2().Y, width, height);
             //Gets position of the button as a vector
-            AlphaSortIconPos = new Vector2(AlphaSortIcon.bounds.X, AlphaSortIcon.bounds.Y);
+            AlphaSortIconPos = new Vector2(AlphaSortIcon.bounds.X, AlphaSortIcon.bounds.Y) * Game1.options.uiScale;
             //uses that position to create a rectangle around that button, used for hover animations and detecting clicks
-            AlphaSortIconArea = new Rectangle((int)AlphaSortIconPos.X, (int)AlphaSortIconPos.Y, width, height);
+            AlphaSortIconArea = new Rectangle((int)AlphaSortIconPos.X, (int)AlphaSortIconPos.Y, (int)(width * Game1.options.uiScale), (int)(height * Game1.options.uiScale));
         }
 
         internal static void MakePriceIcon(ItemGrabMenu menu, Texture2D img, bool HasBC)
@@ -45,22 +45,16 @@ namespace more_sorting
             PriceSortIcon.hoverText = "$$$->$";
             if (HasBC)
                 PriceSortIcon.bounds = new Rectangle((int)menu.fillStacksButton.getVector2().X + 176 + width, (int)menu.fillStacksButton.getVector2().Y, width, height);
-            PriceSortIconPos = new Vector2(PriceSortIcon.bounds.X, PriceSortIcon.bounds.Y);
-            PriceSortIconArea = new Rectangle((int)PriceSortIconPos.X, (int)PriceSortIconPos.Y, 64, 64);
+            PriceSortIconPos = new Vector2(PriceSortIcon.bounds.X, PriceSortIcon.bounds.Y) * Game1.options.uiScale;
+            PriceSortIconArea = new Rectangle((int)PriceSortIconPos.X, (int)PriceSortIconPos.Y, (int)(width * Game1.options.uiScale), (int)(height * Game1.options.uiScale));
         }
-        internal static void HoverEffect(ClickableTextureComponent icon, int x, int y, float originalScale, float scaleResult, float delta)
+        internal static void HoverEffect(ClickableTextureComponent icon,Rectangle area, int x, int y, float originalScale, float scaleResult, float delta)
         {
             //Checks to see if the mouse cursor is hovering the button, if it is, scale the button up, but if it isnt, scale the button to its original size
-            if (icon.containsPoint(x,y))
+            if (area.Contains(x,y))
             {
                 ScaleTransition(icon, scaleResult, delta);
                 DrawButton(icon);
-                //draws the hover text
-                IClickableMenu.drawHoverText(
-                 Game1.spriteBatch,
-                 icon.hoverText,
-                 Game1.smallFont
-                 );
             }
             else
             {
