@@ -92,33 +92,44 @@ namespace more_sorting
                     //Draws color picker toggle button hover text over icon/alpha sort buttons
                     if (!HasBetterChests)
                     {
-                        Rectangle colorbutton = new Rectangle((int)Math.Ceiling(menu.colorPickerToggleButton.bounds.X * Game1.options.uiScale), (int)Math.Ceiling(menu.colorPickerToggleButton.bounds.Y * Game1.options.uiScale), (int)Math.Ceiling(64 * Game1.options.uiScale), (int)Math.Ceiling(64 * Game1.options.uiScale));
-                        if (colorbutton.Contains(mousePosition))
+                        if(menu.colorPickerToggleButton is not null)
+                        {
+                            Rectangle colorbutton = new Rectangle((int)Math.Ceiling(menu.colorPickerToggleButton.bounds.X * Game1.options.uiScale), (int)Math.Ceiling(menu.colorPickerToggleButton.bounds.Y * Game1.options.uiScale), (int)Math.Ceiling(64 * Game1.options.uiScale), (int)Math.Ceiling(64 * Game1.options.uiScale));
+                            if (colorbutton.Contains(mousePosition))
+                            {
+                                IClickableMenu.drawHoverText(
+                                Game1.spriteBatch,
+                                menu.colorPickerToggleButton.hoverText,
+                                Game1.smallFont);
+                            }
+                        }
+   
+                    }
+                    //Draws organize button hover text over icon/alpha sort buttons
+                    if (menu.organizeButton is not null)
+                    {
+                        Rectangle orgbutton = new Rectangle((int)Math.Ceiling(menu.organizeButton.bounds.X * Game1.options.uiScale), (int)Math.Ceiling(menu.organizeButton.bounds.Y * Game1.options.uiScale), (int)Math.Ceiling(64 * Game1.options.uiScale), (int)Math.Ceiling(64 * Game1.options.uiScale));
+                        if (orgbutton.Contains(mousePosition))
                         {
                             IClickableMenu.drawHoverText(
                             Game1.spriteBatch,
-                            menu.colorPickerToggleButton.hoverText,
+                            menu.organizeButton.hoverText,
                             Game1.smallFont);
                         }
                     }
-                    //Draws organize button hover text over icon/alpha sort buttons
-                    Rectangle orgbutton = new Rectangle((int)Math.Ceiling(menu.organizeButton.bounds.X * Game1.options.uiScale), (int)Math.Ceiling(menu.organizeButton.bounds.Y * Game1.options.uiScale), (int)Math.Ceiling(64 * Game1.options.uiScale), (int)Math.Ceiling(64 * Game1.options.uiScale));
-                    if (orgbutton.Contains(mousePosition))
-                    {
-                        IClickableMenu.drawHoverText(
-                        Game1.spriteBatch,
-                        menu.organizeButton.hoverText,
-                        Game1.smallFont);
-                    }
                     //Draws fill stacks button hover text over icon/alpha sort buttons
-                    Rectangle fillButton = new Rectangle((int)Math.Ceiling(menu.fillStacksButton.bounds.X * Game1.options.uiScale), (int)Math.Ceiling(menu.fillStacksButton.bounds.Y * Game1.options.uiScale), (int)Math.Ceiling(64 * Game1.options.uiScale), (int)Math.Ceiling(64 * Game1.options.uiScale));
-                    if (fillButton.Contains((int)mousePosition.X, (int)mousePosition.Y))
+                    if(menu.fillStacksButton is not null)
                     {
-                        IClickableMenu.drawHoverText(
-                        Game1.spriteBatch,
-                        menu.fillStacksButton.hoverText,
-                        Game1.smallFont);
+                        Rectangle fillButton = new Rectangle((int)Math.Ceiling(menu.fillStacksButton.bounds.X * Game1.options.uiScale), (int)Math.Ceiling(menu.fillStacksButton.bounds.Y * Game1.options.uiScale), (int)Math.Ceiling(64 * Game1.options.uiScale), (int)Math.Ceiling(64 * Game1.options.uiScale));
+                        if (fillButton.Contains((int)mousePosition.X, (int)mousePosition.Y))
+                        {
+                            IClickableMenu.drawHoverText(
+                            Game1.spriteBatch,
+                            menu.fillStacksButton.hoverText,
+                            Game1.smallFont);
+                        }
                     }
+
                     //Draws hover text over icons
                     if (SortButtonMethods.PriceSortIconArea.Contains(mousePosition) && SortButtonMethods.PriceSortIcon is not null)
                     {
@@ -164,7 +175,6 @@ namespace more_sorting
                     two = chest2;
                 if (menu.source == 1 && menu.sourceItem is StardewValley.Objects.Chest || menu.context is StardewValley.Objects.Chest)
                 {
-
                     StardewValley.Objects.Chest chest = one ?? two;
                     //Checks to see if the player clicks on the AlphaSortIcon, and if the player does, sort it Alphabetically
                     if (SortButtonMethods.AlphaSortIconArea.Contains(mousePosition.X, mousePosition.Y))
