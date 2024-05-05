@@ -98,45 +98,51 @@ namespace more_sorting
                     }
                 }
 
-                //Draws organize button hover text over icon/alpha sort buttons
-                Rectangle orgbutton = new Rectangle((int)Math.Ceiling(menu.organizeButton.bounds.X * Game1.options.uiScale), (int)Math.Ceiling(menu.organizeButton.bounds.Y * Game1.options.uiScale), (int)Math.Ceiling(64 * Game1.options.uiScale), (int)Math.Ceiling(64 * Game1.options.uiScale));
-                if(orgbutton.Contains(mousePosition))
-                {
-                    IClickableMenu.drawHoverText(
-                    Game1.spriteBatch,
-                    menu.organizeButton.hoverText,
-                    Game1.smallFont);
-                }
-                //Draws fill stacks button hover text over icon/alpha sort buttons
-                Rectangle fillButton = new Rectangle((int)Math.Ceiling(menu.fillStacksButton.bounds.X * Game1.options.uiScale), (int)Math.Ceiling(menu.fillStacksButton.bounds.Y * Game1.options.uiScale), (int)Math.Ceiling(64 * Game1.options.uiScale), (int)Math.Ceiling(64 * Game1.options.uiScale));
-                if (fillButton.Contains((int)mousePosition.X, (int)mousePosition.Y))
-                {
-                    IClickableMenu.drawHoverText(
-                    Game1.spriteBatch,
-                    menu.fillStacksButton.hoverText,
-                    Game1.smallFont);
-                }
-                //Draws hover text over icons
-                if(SortButtonMethods.PriceSortIconArea.Contains(mousePosition) && SortButtonMethods.PriceSortIcon is not null)
-                {
-                    IClickableMenu.drawHoverText(
-                    Game1.spriteBatch,
-                    SortButtonMethods.PriceSortIcon.hoverText,
-                    Game1.smallFont
-                    );
-                }
-                //Draws hover text over icons
-                if (SortButtonMethods.AlphaSortIconArea.Contains(mousePosition) && SortButtonMethods.AlphaSortIcon is not null)
-                {
-                    IClickableMenu.drawHoverText(
-                    Game1.spriteBatch,
-                    SortButtonMethods.AlphaSortIcon.hoverText,
-                    Game1.smallFont
-                    );
-                }
 
-                //Draws the mouse so the cursor is not under the button
-                menu.drawMouse(Game1.spriteBatch);
+                //Draws only if the player is within a chest or fridge to prevent crashing from custom menus by other mods
+                if (menu.source == 1 && menu.sourceItem is StardewValley.Objects.Chest || menu.context is StardewValley.Objects.Chest)
+                {
+                    //Draws organize button hover text over icon/alpha sort buttons
+                    Rectangle orgbutton = new Rectangle((int)Math.Ceiling(menu.organizeButton.bounds.X * Game1.options.uiScale), (int)Math.Ceiling(menu.organizeButton.bounds.Y * Game1.options.uiScale), (int)Math.Ceiling(64 * Game1.options.uiScale), (int)Math.Ceiling(64 * Game1.options.uiScale));
+                    if (orgbutton.Contains(mousePosition))
+                    {
+                        IClickableMenu.drawHoverText(
+                        Game1.spriteBatch,
+                        menu.organizeButton.hoverText,
+                        Game1.smallFont);
+                    }
+                    //Draws fill stacks button hover text over icon/alpha sort buttons
+                    Rectangle fillButton = new Rectangle((int)Math.Ceiling(menu.fillStacksButton.bounds.X * Game1.options.uiScale), (int)Math.Ceiling(menu.fillStacksButton.bounds.Y * Game1.options.uiScale), (int)Math.Ceiling(64 * Game1.options.uiScale), (int)Math.Ceiling(64 * Game1.options.uiScale));
+                    if (fillButton.Contains((int)mousePosition.X, (int)mousePosition.Y))
+                    {
+                        IClickableMenu.drawHoverText(
+                        Game1.spriteBatch,
+                        menu.fillStacksButton.hoverText,
+                        Game1.smallFont);
+                    }
+                    //Draws hover text over icons
+                    if (SortButtonMethods.PriceSortIconArea.Contains(mousePosition) && SortButtonMethods.PriceSortIcon is not null)
+                    {
+                        IClickableMenu.drawHoverText(
+                        Game1.spriteBatch,
+                        SortButtonMethods.PriceSortIcon.hoverText,
+                        Game1.smallFont
+                        );
+                    }
+                    //Draws hover text over icons
+                    if (SortButtonMethods.AlphaSortIconArea.Contains(mousePosition) && SortButtonMethods.AlphaSortIcon is not null)
+                    {
+                        IClickableMenu.drawHoverText(
+                        Game1.spriteBatch,
+                        SortButtonMethods.AlphaSortIcon.hoverText,
+                        Game1.smallFont
+                        );
+                    }
+
+                    //Draws the mouse so the cursor is not under the button
+                    menu.drawMouse(Game1.spriteBatch);
+                }
+                
 
 
             }
