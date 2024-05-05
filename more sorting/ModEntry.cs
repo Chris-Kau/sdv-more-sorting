@@ -38,8 +38,6 @@ namespace more_sorting
                     SortButtonMethods.MakeAlphaIcon(menu, Helper.ModContent.Load<Texture2D>("./assets/AlphaSortIcon.png"), HasBetterChests);
                     SortButtonMethods.MakePriceIcon(menu, Helper.ModContent.Load<Texture2D>("./assets/PriceSortIcon.png"), HasBetterChests);
                 }
-
-
             }
         }
 
@@ -85,23 +83,24 @@ namespace more_sorting
                     SortButtonMethods.HoverEffect(SortButtonMethods.AlphaSortIcon, SortButtonMethods.AlphaSortIconArea, (int)mousePosition.X, (int)mousePosition.Y, 1f, 1.1f, 0.02f);
                 }
 
-                //Draws color picker toggle button hover text over icon/alpha sort buttons
-                if (!HasBetterChests)
-                {
-                    Rectangle colorbutton = new Rectangle((int)Math.Ceiling(menu.colorPickerToggleButton.bounds.X * Game1.options.uiScale), (int)Math.Ceiling(menu.colorPickerToggleButton.bounds.Y * Game1.options.uiScale), (int)Math.Ceiling(64 * Game1.options.uiScale), (int)Math.Ceiling(64 * Game1.options.uiScale));
-                    if (colorbutton.Contains(mousePosition))
-                    {
-                        IClickableMenu.drawHoverText(
-                        Game1.spriteBatch,
-                        menu.colorPickerToggleButton.hoverText,
-                        Game1.smallFont);
-                    }
-                }
+
 
 
                 //Draws only if the player is within a chest or fridge to prevent crashing from custom menus by other mods
                 if (menu.source == 1 && menu.sourceItem is StardewValley.Objects.Chest || menu.context is StardewValley.Objects.Chest)
                 {
+                    //Draws color picker toggle button hover text over icon/alpha sort buttons
+                    if (!HasBetterChests)
+                    {
+                        Rectangle colorbutton = new Rectangle((int)Math.Ceiling(menu.colorPickerToggleButton.bounds.X * Game1.options.uiScale), (int)Math.Ceiling(menu.colorPickerToggleButton.bounds.Y * Game1.options.uiScale), (int)Math.Ceiling(64 * Game1.options.uiScale), (int)Math.Ceiling(64 * Game1.options.uiScale));
+                        if (colorbutton.Contains(mousePosition))
+                        {
+                            IClickableMenu.drawHoverText(
+                            Game1.spriteBatch,
+                            menu.colorPickerToggleButton.hoverText,
+                            Game1.smallFont);
+                        }
+                    }
                     //Draws organize button hover text over icon/alpha sort buttons
                     Rectangle orgbutton = new Rectangle((int)Math.Ceiling(menu.organizeButton.bounds.X * Game1.options.uiScale), (int)Math.Ceiling(menu.organizeButton.bounds.Y * Game1.options.uiScale), (int)Math.Ceiling(64 * Game1.options.uiScale), (int)Math.Ceiling(64 * Game1.options.uiScale));
                     if (orgbutton.Contains(mousePosition))
