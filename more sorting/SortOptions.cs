@@ -48,10 +48,10 @@ namespace more_sorting
         }
 
 
-        internal static void AlphaSort(object? sender, Chest chest, StardewValley.Menus.ItemGrabMenu menu, bool reverse)
+        internal static void AlphaSort(object? sender, StardewValley.Menus.ItemGrabMenu menu, bool reverse)
         {
             //gets the items in the chest the player is currently in
-            List<Item> chestContents = ChestMethods.getItems(sender, chest);
+            List<Item> chestContents = ChestMethods.getItems(sender, menu);
             //bubble sort for test, but we should 100% not use bubble sort 
             SelectionSort(chestContents, "alpha");
             //if user right clicks, we reverse the list
@@ -61,9 +61,9 @@ namespace more_sorting
             ChestMethods.ReplaceContents(sender, chestContents, menu);
         }
 
-        internal static void PriceSort(object? sender, Chest chest, StardewValley.Menus.ItemGrabMenu menu, bool reverse)
+        internal static void PriceSort(object? sender, StardewValley.Menus.ItemGrabMenu menu, bool reverse)
         {
-            List<Item> chestContents = ChestMethods.getItems(sender, chest);
+            List<Item> chestContents = ChestMethods.getItems(sender, menu);
             SelectionSort(chestContents, "price");
             if (reverse)
                 chestContents.Reverse();

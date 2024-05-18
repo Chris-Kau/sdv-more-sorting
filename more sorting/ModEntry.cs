@@ -5,6 +5,8 @@ using StardewValley;
 using StardewValley.Menus;
 using Microsoft.Xna.Framework.Graphics;
 using StardewValley.Extensions;
+using System.Security.AccessControl;
+using StardewValley.Objects;
 
 namespace more_sorting
 {
@@ -33,7 +35,7 @@ namespace more_sorting
         {
             if (Game1.activeClickableMenu is ItemGrabMenu menu)
             {
-                if (menu.source == 1 && menu.sourceItem is StardewValley.Objects.Chest || menu.context is StardewValley.Objects.Chest)
+                if ((menu.organizeButton is not null && menu.fillStacksButton is not null) && (menu.source == 1 && menu.sourceItem is StardewValley.Objects.Chest || menu.context is StardewValley.Objects.Chest))
                 {
                     SortButtonMethods.MakeAlphaIcon(menu, Helper.ModContent.Load<Texture2D>("./assets/AlphaSortIcon.png"), HasBetterChests);
                     SortButtonMethods.MakePriceIcon(menu, Helper.ModContent.Load<Texture2D>("./assets/PriceSortIcon.png"), HasBetterChests);
@@ -52,11 +54,15 @@ namespace more_sorting
             }
             if(e.NewMenu is ItemGrabMenu menu)
             {
-                if(menu.source == 1 || menu.context is StardewValley.Objects.Chest)
+                if((menu.source == 1 || menu.context is StardewValley.Objects.Chest))
                 {
                     MakeButtons(sender);
-                    SortButtonMethods.AlphaSortIcon.visible = true;
-                    SortButtonMethods.PriceSortIcon.visible = true;
+                    if (SortButtonMethods.AlphaSortIcon is not null && SortButtonMethods.PriceSortIcon is not null)
+                    {
+                        SortButtonMethods.AlphaSortIcon.visible = true;
+                        SortButtonMethods.PriceSortIcon.visible = true;
+                    }
+
                 }
                 //if the player opened an ItemGrabMenu that is not a chest or fridge
                 else
@@ -166,27 +172,21 @@ namespace more_sorting
             if((e.Button is SButton.MouseLeft || e.Button is SButton.MouseRight) && Game1.activeClickableMenu is ItemGrabMenu menu)
             {  
                 Vector2 mousePosition = new Vector2(Game1.getMouseXRaw(), Game1.getMouseYRaw());
-                StardewValley.Objects.Chest one = null;
-                StardewValley.Objects.Chest two = null;
 
-                if (menu.source == 1 && menu.sourceItem is StardewValley.Objects.Chest chest1)
-                    one = chest1;
-                if (menu.context is StardewValley.Objects.Chest chest2)
-                    two = chest2;
+  
                 if (menu.source == 1 && menu.sourceItem is StardewValley.Objects.Chest || menu.context is StardewValley.Objects.Chest)
                 {
-                    StardewValley.Objects.Chest chest = one ?? two;
                     //Checks to see if the player clicks on the AlphaSortIcon, and if the player does, sort it Alphabetically
                     if (SortButtonMethods.AlphaSortIconArea.Contains(mousePosition.X, mousePosition.Y))
                     {
-                        SortOptions.AlphaSort(sender, chest, menu, reverse);
+                        SortOptions.AlphaSort(sender, menu, reverse);
                         SortButtonMethods.ClickAnimation(SortButtonMethods.AlphaSortIcon, 1f, 1.1f);
                         Game1.playSound("Ship");
                     }
                     //Checks to see if the player clicks on the PriceSortIcon
                     else if (SortButtonMethods.PriceSortIconArea.Contains(mousePosition.X, mousePosition.Y))
                     {
-                        SortOptions.PriceSort(sender, chest, menu, reverse);
+                        SortOptions.PriceSort(sender, menu, reverse);
                         SortButtonMethods.ClickAnimation(SortButtonMethods.PriceSortIcon, 1f, 1.1f);
                         Game1.playSound("Ship");
                     }
