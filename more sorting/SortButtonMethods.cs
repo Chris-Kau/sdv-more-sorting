@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using StardewValley;
 using StardewValley.Menus;
+using System.Runtime.CompilerServices;
 
 namespace more_sorting
 {
@@ -16,7 +17,7 @@ namespace more_sorting
         private static int width = 64;
         private static int height = 64;
 
-        internal static void MakeAlphaIcon(ItemGrabMenu menu, Texture2D img, bool HasBC)
+        internal static void MakeAlphaIcon(ItemGrabMenu menu, Texture2D img, bool HasBC, bool BCOffset)
         {
             //Responsible for creating the button and drawing it to the screen 
             AlphaSortIcon = new ClickableTextureComponent(
@@ -26,7 +27,7 @@ namespace more_sorting
                 1f
                 );
             AlphaSortIcon.hoverText = "A->Z";
-            if (HasBC)
+            if (HasBC && !BCOffset)
                 AlphaSortIcon.bounds = new Rectangle((int)menu.organizeButton.getVector2().X + 176 + width, (int)menu.organizeButton.getVector2().Y, width, height);
             //Gets position of the button as a vector
             AlphaSortIconPos = new Vector2(AlphaSortIcon.bounds.X, AlphaSortIcon.bounds.Y) * Game1.options.uiScale;
@@ -34,7 +35,7 @@ namespace more_sorting
             AlphaSortIconArea = new Rectangle((int)AlphaSortIconPos.X, (int)AlphaSortIconPos.Y, (int)(width * Game1.options.uiScale), (int)(height * Game1.options.uiScale));
         }
 
-        internal static void MakePriceIcon(ItemGrabMenu menu, Texture2D img, bool HasBC)
+        internal static void MakePriceIcon(ItemGrabMenu menu, Texture2D img, bool HasBC, bool BCOffset)
         {
             PriceSortIcon = new ClickableTextureComponent(
                     new Rectangle((int)menu.fillStacksButton.getVector2().X + 16 + width, (int)menu.fillStacksButton.getVector2().Y, width, height),
@@ -43,7 +44,7 @@ namespace more_sorting
                     1f
                     );
             PriceSortIcon.hoverText = "$$$->$";
-            if (HasBC)
+            if (HasBC && !BCOffset)
                 PriceSortIcon.bounds = new Rectangle((int)menu.fillStacksButton.getVector2().X + 176 + width, (int)menu.fillStacksButton.getVector2().Y, width, height);
             PriceSortIconPos = new Vector2(PriceSortIcon.bounds.X, PriceSortIcon.bounds.Y) * Game1.options.uiScale;
             PriceSortIconArea = new Rectangle((int)PriceSortIconPos.X, (int)PriceSortIconPos.Y, (int)(width * Game1.options.uiScale), (int)(height * Game1.options.uiScale));
