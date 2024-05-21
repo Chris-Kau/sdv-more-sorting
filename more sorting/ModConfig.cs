@@ -1,4 +1,4 @@
 ﻿public sealed class ModConfig
 {
-    public bool fixOffsetForBCColorPicker { get; set; } = false;
+    public bool FixOffsetForBCColorPicker { get; set; } = false;
 }
