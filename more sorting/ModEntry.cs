@@ -7,15 +7,19 @@ using Microsoft.Xna.Framework.Graphics;
 using StardewValley.Extensions;
 using System.Security.AccessControl;
 using StardewValley.Objects;
+using GenericModConfigMenu;
 
 namespace more_sorting
 {
     internal sealed class ModEntry : Mod
     {
+        private ModConfig Config { get; set; } = new ModConfig();
         private bool HasBetterChests;
         public override void Entry(IModHelper helper)
         {
             HasBetterChests = this.Helper.ModRegistry.IsLoaded("furyx639.BetterChests");
+            //GameLaunched is for Generic Mod Config Menu
+            Helper.Events.GameLoop.GameLaunched += this.OnGameLaunched;
             //Gives the Illusion of the user "clicking" on the buttons
             Helper.Events.Input.ButtonPressed += this.ClickedSortButtons;
             //Updates the button everytime the player opens a chest
@@ -26,6 +30,34 @@ namespace more_sorting
             Helper.Events.Display.RenderedActiveMenu += this.HoverEffect;
         }
 
+        private void OnGameLaunched(object? sender, GameLaunchedEventArgs e)
+        {
+            // get Generic Mod Config Menu's API (if it's installed)
+            var configMenu = this.Helper.ModRegistry.GetApi<IGenericModConfigMenuApi>("spacechase0.GenericModConfigMenu");
+            if (configMenu is null)
+                return;
+
+            // register mod
+            configMenu.Register(
+                mod: this.ModManifest,
+                reset: () => this.Config = new ModConfig(),
+                save: () => this.Helper.WriteConfig(this.Config)
+            );
+
+            // add some config options
+            configMenu.AddBoolOption(
+                mod: this.ModManifest,
+                name: () => "Fix Better Chest Offset",
+                getValue: () => this.Config.FixOffsetForBCColorPicker,
+                setValue: value => this.Config.FixOffsetForBCColorPicker = value
+            );
+
+            configMenu.AddParagraph(
+                mod: this.ModManifest,
+                text:() => "If youre using Better Chest mod, and you want the buttons to be in place of the Better Chest's color picker option, change this setting to change the offset of the button. If you're not a user of Better Chest, ignore this option."
+            );
+
+        }
         private void RecreateButtonsOnWindowResize(object? sender, WindowResizedEventArgs e)
         {
             MakeButtons(sender);
@@ -37,8 +69,8 @@ namespace more_sorting
             {
                 if ((menu.organizeButton is not null && menu.fillStacksButton is not null) && (menu.source == 1 && menu.sourceItem is StardewValley.Objects.Chest || menu.context is StardewValley.Objects.Chest))
                 {
-                    SortButtonMethods.MakeAlphaIcon(menu, Helper.ModContent.Load<Texture2D>("./assets/AlphaSortIcon.png"), HasBetterChests);
-                    SortButtonMethods.MakePriceIcon(menu, Helper.ModContent.Load<Texture2D>("./assets/PriceSortIcon.png"), HasBetterChests);
+                    SortButtonMethods.MakeAlphaIcon(menu, Helper.ModContent.Load<Texture2D>("./assets/AlphaSortIcon.png"), HasBetterChests, this.Config.FixOffsetForBCColorPicker);
+                    SortButtonMethods.MakePriceIcon(menu, Helper.ModContent.Load<Texture2D>("./assets/PriceSortIcon.png"), HasBetterChests, this.Config.FixOffsetForBCColorPicker);
                 }
             }
         }
