@@ -54,7 +54,7 @@ namespace more_sorting
 
             configMenu.AddParagraph(
                 mod: this.ModManifest,
-                text:() => "If youre using Better Chest mod, and you want the buttons to be in place of the Better Chest's color picker option, change this setting to change the offset of the button. If you're not a user of Better Chest, ignore this option."
+                text:() => "If you're using Better Chest mod, and you want the buttons to be in place of the Better Chests's color picker option, change this setting to change the offset of the button. If you're not a user of Better Chests mod, ignore this option."
             );
 
         }
